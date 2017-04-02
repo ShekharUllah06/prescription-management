@@ -60,7 +60,7 @@ public class Main extends javax.swing.JFrame {
         fileMenu.setText("File");
 
         openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
+        openMenuItem.setText("Company");
         fileMenu.add(openMenuItem);
 
         saveMenuItem.setMnemonic('s');
