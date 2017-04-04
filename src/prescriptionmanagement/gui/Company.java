@@ -5,7 +5,9 @@
  */
 package prescriptionmanagement.gui;
 
+import java.util.Collection;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import prescriptionmanagement.bean.CompanyName;
 import prescriptionmanagement.bean.Manager;
 
@@ -20,6 +22,7 @@ public class Company extends javax.swing.JFrame {
      */
     public Company() {
         initComponents();
+        populateTable();
     }
 
     /**
@@ -41,9 +44,9 @@ public class Company extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblCompany = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 153, 0));
@@ -81,19 +84,15 @@ public class Company extends javax.swing.JFrame {
         jButton4.setForeground(new java.awt.Color(51, 51, 51));
         jButton4.setText("Fiend");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblCompany.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Company Name"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblCompany);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,6 +174,7 @@ public class Company extends javax.swing.JFrame {
             Manager manager = new Manager();
             if(manager.persist(companyName)){
                 JOptionPane.showMessageDialog(this, "Save Successfully", "Prescription Management", 1);
+                populateTable();
             }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -214,6 +214,16 @@ public class Company extends javax.swing.JFrame {
             }
         });
     }
+     private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblCompany.getModel();
+        model.setNumRows(0);
+        CompanyName companyName = new CompanyName();
+        Collection<CompanyName> emps = companyName.findAllCompanyName();
+        for (CompanyName e : emps) {
+            model.addRow(new Object[]{e.getCompanyName()});
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
@@ -225,7 +235,7 @@ public class Company extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblCompany;
     private javax.swing.JTextField txtCompanyName;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,6 +28,7 @@ public class Manager {
 
     public boolean persist(Object object) {
         boolean isPersisted = false;
+  
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("PrescriptionManagementPU");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();

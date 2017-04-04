@@ -21,10 +21,14 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -40,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CompanyName.findAll", query = "SELECT c FROM CompanyName c"),
     @NamedQuery(name = "CompanyName.findByCompanyName", query = "SELECT c FROM CompanyName c WHERE c.companyName = :companyName")})
 public class CompanyName implements Serializable {
+   
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -97,5 +102,16 @@ public class CompanyName implements Serializable {
     public String toString() {
         return "prescriptionmanagement.bean.CompanyName[ companyName=" + companyName + " ]";
     }
+     public Collection<CompanyName> findAllCompanyName() {
+          EntityManagerFactory emf = Persistence.createEntityManagerFactory("PrescriptionManagementPU");
+    EntityManager em;
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery("SELECT c FROM CompanyName c");
+        Collection<CompanyName> companyNameCollection = query.getResultList();
+        em.close();
+        return companyNameCollection;
+    }
+    
     
 }
